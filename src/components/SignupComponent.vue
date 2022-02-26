@@ -7,7 +7,7 @@
         <form action="#" @submit.prevent="submitSignup" autocomplete="off">
           <div class="flex flex-col mb-6">
 
-            <label for="fname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Firstname</label>
+            <label for="fullname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Fullname</label>
             <div class="relative">
               <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
                 <!--                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
@@ -15,40 +15,10 @@
                 <!--                </svg>-->
                 <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
               </div>
-              <input id="fname" type="text" name="fname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Firstname"
-              v-model="Signupform.fname"/>
+              <input id="fullname" type="text" name="fullname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Fullname"
+              v-model="Signupform.fullname"/>
             </div>
-            <b v-if="!firstnamevalid">Please Enter your firstname</b>
-          </div>
-
-          <div class="flex flex-col mb-6">
-            <label for="mname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Middlename (optional):</label>
-            <div class="relative">
-              <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-                <!--                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
-                <!--                  <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />-->
-                <!--                </svg>-->
-                <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-              </div>
-              <input id="mname" type="text" name="mname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Middlename"
-              v-model="Signupform.mname"/>
-
-            </div>
-          </div>
-
-          <div class="flex flex-col mb-6">
-            <label for="lname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Lastname:</label>
-            <div class="relative">
-              <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-                <!--                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
-                <!--                  <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />-->
-                <!--                </svg>-->
-                <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-              </div>
-              <input id="lname" type="text" name="lname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Lastname"
-              v-model="Signupform.lname"/>
-            </div>
-            <b v-if="!lastnamevalid">Please Enter your lastname</b>
+            <b v-if="!fullnamevalid">Please Enter your Fullname</b>
           </div>
 
           <div class="flex flex-col mb-6">
@@ -130,15 +100,14 @@
 </template>
 
 <script>
-
+import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
   name: "SignupComponent",
   data() {
     return {
       Signupform: {
-            fname: null,
-            mname: null,
-            lname: null,
+            fullname: null,
             email: null,
             password: null,
             retypepass:null,
@@ -146,18 +115,10 @@ export default {
     }
   },
   computed: {
-      firstnamevalid(){
-        return !!this.Signupform.fname
-      },
 
-    middlenamevalid(){
-        return this.Signupform.mname
+    fullnamevalid(){
+      return !!this.Signupform.fullname
     },
-
-     lastnamevalid(){
-      return !!this.Signupform.lname
-      },
-
      emailvalid(){
       return !!this.Signupform.email
      },
@@ -177,15 +138,42 @@ export default {
     }
   },
   methods: {
-    submitSignup () {
-      const formvalid = this.firstnamevalid && this.lastnamevalid && this.emailvalid && this.passvalid && this.retypevalid && this.middlenamevalid && this.validemail && this.valid2pass;
-
-      if (formvalid){
-        console.log('Form Submitted', this.Signupform)
+    submitSignup() {
+      const formvalid =  this.fullnamevalid && this.emailvalid && this.passvalid && this.retypevalid && this.validemail && this.valid2pass;
+      if (formvalid) {
+        this.create_user();
       } else {
-        console.log('Invalid');
+        Swal.fire({
+          title: 'Error',
+          text: 'There some error in signup form',
+          icon: 'error',
+        });
       }
     },
+
+    create_user() {
+        const url = 'http://localhost/'
+
+      axios.post(url + 'api/register',
+          {
+            name:this.Signupform.fullname,
+            email:this.Signupform.email,
+            password:this.Signupform.retypepass})
+          .then((res) => {
+            //success message alert
+            Swal.fire({
+              title: 'Succesfully',
+              text: "User has been registered successfully",
+              icon: 'success',
+            });
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e);
+            Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
+          })
+    },
+
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(emailsignValid);
