@@ -1,0 +1,8 @@
+{
+    "require-dev": {
+        "laravel/ui": "^3.4"
+    },
+    "require": {
+        "barryvdh/laravel-cors": "^3.0"
+    }
+}
