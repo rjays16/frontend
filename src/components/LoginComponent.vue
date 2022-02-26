@@ -83,8 +83,8 @@
 </template>
 
 <script>
-// import axios from 'axios';
-
+import axios from 'axios';
+import Swal from 'sweetalert2'
 export default {
   name: 'LoginComponent',
   data() {
@@ -93,7 +93,6 @@ export default {
         email: null,
         password: null,
       },
-      secrets: [],
       formData: {
           email: '',
           password: '',
@@ -116,19 +115,52 @@ export default {
   },
   methods: {
     submitLogin() {
-      const formvalid =  this.emailvalid && this.validemail && this.passvalid
+      const formvalid = this.emailvalid && this.validemail && this.passvalid
 
-      if (formvalid){
-        console.log('Form Submitted', this.LoginForm)
+      if (formvalid) {
+        this.login_user();
       } else {
         console.log('Invalid');
       }
+    },
+    login_user() {
+      const url = 'http://localhost/'
+      axios.get(url + 'sanctum/csrf-cookie').then(response => {
+        console.log(response);
+        axios.post(url + 'api/login', this.LoginForm).then((resp) => {
+          console.log(resp["data"]["status"]);
+          this.LoginForm.email = '';
+          this.LoginForm.password = '';
+          if (resp["data"]["status"] == "error") {
+            Swal.fire({
+              title: 'OPPS',
+              text: "Invalid email/password Please try again",
+              icon: 'warning',
+            });
+          } else {
+            Swal.fire({
+              title: 'Hurry',
+              text: "You have been logged-in successfully",
+              icon: 'success',
+            });
+          }
+        })
+            .catch((e) => {
+              console.log(e);
+              Swal.fire({
+                title: 'Hurry',
+                text: e,
+                icon: 'warning',
+              });
+            })
+      })
     },
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(emailsignValid);
     },
   }
+
   // methods: {
   //   handleLogin()
   //   {
