@@ -3,20 +3,22 @@
     <div class="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
       <div class="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Sign up Page</div>
       <div class="mt-10">
-        <form action="#">
 
+        <form action="#" @submit.prevent="submitSignup" autocomplete="off">
           <div class="flex flex-col mb-6">
-            <label for="fname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">First Name:</label>
+
+            <label for="fname" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Firstname</label>
             <div class="relative">
               <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-<!--                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                  <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />-->
-<!--                </svg>-->
+                <!--                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
+                <!--                  <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />-->
+                <!--                </svg>-->
                 <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
               </div>
-              <input id="fname" type="text" name="fname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="firstname" />
-
+              <input id="fname" type="text" name="fname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Firstname"
+              v-model="Signupform.fname"/>
             </div>
+            <b v-if="!firstnamevalid">Please Enter your firstname</b>
           </div>
 
           <div class="flex flex-col mb-6">
@@ -28,7 +30,8 @@
                 <!--                </svg>-->
                 <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
               </div>
-              <input id="mname" type="text" name="mname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Middlename" />
+              <input id="mname" type="text" name="mname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Middlename"
+              v-model="Signupform.mname"/>
 
             </div>
           </div>
@@ -42,9 +45,10 @@
                 <!--                </svg>-->
                 <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
               </div>
-              <input id="lname" type="text" name="lname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Lastname" />
-
+              <input id="lname" type="text" name="lname" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Lastname"
+              v-model="Signupform.lname"/>
             </div>
+            <b v-if="!lastnamevalid">Please Enter your lastname</b>
           </div>
 
           <div class="flex flex-col mb-6">
@@ -56,9 +60,13 @@
                 </svg>
               </div>
 
-              <input id="email" type="email" name="email" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="E-Mail Address" />
+              <input id="email" type="text" name="email" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="E-Mail Address"
+              v-model="Signupform.email"/>
             </div>
+            <b v-if="!emailvalid">Please enter your email</b>
+            <b v-if="!validemail && emailvalid" id="req">Please enter valid email address</b>
           </div>
+
           <div class="flex flex-col mb-6">
             <label for="password" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Password:</label>
             <div class="relative">
@@ -70,8 +78,28 @@
               </span>
               </div>
 
-              <input id="password" type="password" name="password" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Password" />
+              <input id="password" type="password" name="password" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Password"
+              v-model="Signupform.password"/>
             </div>
+            <b v-if="!passvalid">Please enter your Password</b>
+          </div>
+
+          <div class="flex flex-col mb-6">
+            <label for="repassword" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Re-type Password:</label>
+            <div class="relative">
+              <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+              <span>
+                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </span>
+              </div>
+
+              <input id="repassword" type="password" name="repassword" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Re-type Password"
+              v-model="Signupform.retypepass"/>
+            </div>
+            <b v-if="!Signupform.retypepass">Please enter your re-type password</b>
+            <b v-if="Signupform.retypepass !== Signupform.password && Signupform.retypepass ">Password Not Match</b>
           </div>
 
           <div class="flex w-full">
@@ -107,12 +135,71 @@ export default {
   name: "SignupComponent",
   data() {
     return {
-
+      Signupform: {
+            fname: null,
+            mname: null,
+            lname: null,
+            email: null,
+            password: null,
+            retypepass:null,
+      }
     }
-  }
+  },
+  computed: {
+      firstnamevalid(){
+        return !!this.Signupform.fname
+      },
+
+    middlenamevalid(){
+        return this.Signupform.mname
+    },
+
+     lastnamevalid(){
+      return !!this.Signupform.lname
+      },
+
+     emailvalid(){
+      return !!this.Signupform.email
+     },
+      validemail() {
+        return !!this.validEmailcheck(this.Signupform.email)
+      },
+      passvalid(){
+      return !!this.Signupform.password
+     },
+
+      retypevalid(){
+      return !!this.Signupform.retypepass
+      },
+
+    valid2pass () {
+      return !!this.validMatchpassword(this.password, this.retypepass)
+    }
+  },
+  methods: {
+    submitSignup () {
+      const formvalid = this.firstnamevalid && this.lastnamevalid && this.emailvalid && this.passvalid && this.retypevalid && this.middlenamevalid && this.validemail && this.valid2pass;
+
+      if (formvalid){
+        console.log('Form Submitted', this.Signupform)
+      } else {
+        console.log('Invalid');
+      }
+    },
+    validEmailcheck: function (emailsignValid) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(emailsignValid);
+    },
+    validMatchpassword: function (password, repass){
+      var match = password === repass;
+      return match
+    }
+  },
 }
 </script>
 
 <style scoped>
-
+b {
+  color: red;
+}
 </style>

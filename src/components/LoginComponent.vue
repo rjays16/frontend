@@ -1,5 +1,5 @@
 <template>
-  <SignupComponent v-if="redirectvue = 0"></SignupComponent>
+
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-300">
     <div class="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
       <div class="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Login To Your Account</div>
@@ -7,13 +7,15 @@
         <span class="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500"><i class="fab fa-github"></i></span>
         <span>Login with Github</span>
       </button>
+
       <div class="relative mt-10 h-px bg-gray-300">
         <div class="absolute left-0 top-0 flex justify-center w-full -mt-2">
           <span class="bg-white px-4 text-xs text-gray-500 uppercase">Or Login With Email</span>
         </div>
       </div>
+
       <div class="mt-10">
-        <form action="#">
+        <form action="#" @submit.prevent="submitLogin">
           <div class="flex flex-col mb-6">
             <label for="email" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">E-Mail Address:</label>
             <div class="relative">
@@ -22,10 +24,13 @@
                   <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                 </svg>
               </div>
-
-              <input id="email" type="email" name="email" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="E-Mail Address" />
+              <input id="email" type="text" name="email" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="E-Mail Address"
+              v-model="LoginForm.email"/>
             </div>
+            <b v-if="!emailvalid">Please enter your email</b>
+            <b v-if="!validemail && emailvalid" id="req">Please enter valid email address</b>
           </div>
+
           <div class="flex flex-col mb-6">
             <label for="password" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Password:</label>
             <div class="relative">
@@ -37,8 +42,10 @@
               </span>
               </div>
 
-              <input id="password" type="password" name="password" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Password" />
+              <input id="password" type="password" name="password" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Password"
+              v-model="LoginForm.password"/>
             </div>
+            <b v-if="!passvalid">Please enter your Password</b>
           </div>
 
           <div class="flex items-center mb-6 -mt-4">
@@ -82,14 +89,46 @@ export default {
   name: 'LoginComponent',
   data() {
     return {
-
+      LoginForm: {
+        email: null,
+        password: null,
+      },
       secrets: [],
       formData: {
           email: '',
           password: '',
-      }
+      },
     }
   },
+  computed: {
+    passvalid(){
+      return !!this.LoginForm.password
+    },
+
+    emailvalid(){
+      return !!this.LoginForm.email
+    },
+
+    validemail() {
+      return !!this.validEmailcheck(this.LoginForm.email)
+    },
+
+  },
+  methods: {
+    submitLogin() {
+      const formvalid =  this.emailvalid && this.validemail && this.passvalid
+
+      if (formvalid){
+        console.log('Form Submitted', this.LoginForm)
+      } else {
+        console.log('Invalid');
+      }
+    },
+    validEmailcheck: function (emailsignValid) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(emailsignValid);
+    },
+  }
   // methods: {
   //   handleLogin()
   //   {
@@ -112,7 +151,10 @@ export default {
 #marginon{
   margin-left: 600px;
   margin-top: 80px;
+}
 
+b {
+  color: red;
 }
 </style>
 
