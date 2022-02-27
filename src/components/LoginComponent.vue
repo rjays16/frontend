@@ -84,18 +84,17 @@
 
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 export default {
   name: 'LoginComponent',
+  props: {
+
+  },
   data() {
     return {
       LoginForm: {
         email: null,
         password: null,
-      },
-      formData: {
-          email: '',
-          password: '',
       },
     }
   },
@@ -124,9 +123,10 @@ export default {
       }
     },
     login_user() {
+
       const url = 'http://localhost/'
       axios.get(url + 'sanctum/csrf-cookie').then(response => {
-        console.log(response);
+            console.log(response);
         axios.post(url + 'api/login', this.LoginForm).then((resp) => {
           console.log(resp["data"]["status"]);
           this.LoginForm.email = '';
@@ -139,10 +139,13 @@ export default {
             });
           } else {
             Swal.fire({
-              title: 'Hurry',
+              title: 'Success',
               text: "You have been logged-in successfully",
               icon: 'success',
             });
+            if (resp.status === 200){
+              this.$router.push({ path : '/dashboard/' });
+            }
           }
         })
             .catch((e) => {
@@ -155,12 +158,18 @@ export default {
             })
       })
     },
+    beforeRouteEnter(to, from, next) {
+      if (window.Laravel.isLoggedin) {
+        return next('dashboard');
+      }
+      next();
+    },
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(emailsignValid);
     },
-  }
-
+  
+}
   // methods: {
   //   handleLogin()
   //   {

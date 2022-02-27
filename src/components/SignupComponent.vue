@@ -166,7 +166,9 @@ export default {
               text: "User has been registered successfully",
               icon: 'success',
             });
-            console.log(res)
+            if (res.status === 200) {
+              this.$router.push({path: '/'})
+            }
           })
           .catch((e) => {
             console.log(e);
