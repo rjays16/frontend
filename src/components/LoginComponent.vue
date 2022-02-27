@@ -117,43 +117,60 @@ export default {
       if (formvalid) {
         this.login_user();
       } else {
-        console.log('Invalid');
+                Swal.fire({
+                  title: 'OPPS',
+                  text: "Some Fields are required",
+                  icon: 'warning',
+                });
       }
     },
-    login_user() {
+   async login_user() {
       const url = 'http://localhost/'
-      axios.get(url + 'sanctum/csrf-cookie').then(response => {
-            console.log(response);
-        axios.post(url + 'api/login', this.LoginForm).then((resp) => {
-          console.log(resp["data"]["status"]);
-          this.LoginForm.email = '';
-          this.LoginForm.password = '';
-          if (resp["data"]["status"] == "error") {
-            Swal.fire({
-              title: 'OPPS',
-              text: "Invalid email/password Please try again",
-              icon: 'warning',
-            });
-          } else {
-            Swal.fire({
-              title: 'Success',
-              text: "You have been logged-in successfully",
-              icon: 'success',
-            });
-            if (resp.status === 200){
-              this.$router.push({ path : '/dashboard/' });
-            }
-          }
-        }).catch((e) => {
-              console.log(e);
-              Swal.fire({
-                title: 'Hurry',
-                text: e,
-                icon: 'warning',
-              });
-            })
-      })
-    },
+     const response = await axios.post(url +'api/login', {
+       email: this.LoginForm.email,
+       password: this.LoginForm.password,
+
+       headers:{
+         Authorization: 'Bearer ' + localStorage.getItem('token')
+       }
+     });
+      localStorage.setItem('token', response.data.token);
+     await this.$router.push({ path : '/dashboard/' });
+   },
+    //   axios.get(url + 'sanctum/csrf-cookie').then(response => {
+    //         console.log(response);
+    //     axios.post(url + 'api/login', this.LoginForm).then((resp) => {
+    //       console.log(resp["data"]["status"]);
+    //       this.LoginForm.email = '';
+    //       this.LoginForm.password = '';
+    //       if (resp["data"]["status"] == "error") {
+    //         Swal.fire({
+    //           title: 'OPPS',
+    //           text: "Invalid email/password Please try again",
+    //           icon: 'warning',
+    //         });
+    //       } else {
+    //         Swal.fire({
+    //           title: 'Success',
+    //           text: "You have been logged-in successfully",
+    //           icon: 'success',
+    //         });
+    //         if (resp.status === 200){
+    //
+    //           localStorage.setItem('token', resp["data"].token);
+    //           this.$router.push({ path : '/dashboard/' });
+    //         }
+    //       }
+    //     }).catch((e) => {
+    //           console.log(e);
+    //           Swal.fire({
+    //             title: 'Hurry',
+    //             text: e,
+    //             icon: 'warning',
+    //           });
+    //         })
+    //   })
+    // },
 
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
