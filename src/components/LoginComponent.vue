@@ -83,13 +83,11 @@
 </template>
 
 <script>
+
 import axios from 'axios';
 import Swal from 'sweetalert2';
 export default {
   name: 'LoginComponent',
-  props: {
-
-  },
   data() {
     return {
       LoginForm: {
@@ -123,7 +121,6 @@ export default {
       }
     },
     login_user() {
-
       const url = 'http://localhost/'
       axios.get(url + 'sanctum/csrf-cookie').then(response => {
             console.log(response);
@@ -147,8 +144,7 @@ export default {
               this.$router.push({ path : '/dashboard/' });
             }
           }
-        })
-            .catch((e) => {
+        }).catch((e) => {
               console.log(e);
               Swal.fire({
                 title: 'Hurry',
@@ -158,12 +154,7 @@ export default {
             })
       })
     },
-    beforeRouteEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next('dashboard');
-      }
-      next();
-    },
+
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(emailsignValid);
