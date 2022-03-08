@@ -86,8 +86,10 @@
 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
 export default {
   name: 'LoginComponent',
+
   data() {
     return {
       LoginForm: {
@@ -124,60 +126,85 @@ export default {
                 });
       }
     },
-   async login_user() {
-      const url = 'http://localhost/'
-     const response = await axios.post(url +'api/login', {
-       email: this.LoginForm.email,
-       password: this.LoginForm.password,
+    login_user() {
+      if(localStorage.getItem('token') != null) {
+        const url = 'http://localhost/'
+        //   const response = await axios.post(url +'api/login', {
+        //     email: this.LoginForm.email,
+        //     password: this.LoginForm.password,
+        //
+        //     headers:{
+        //       Authorization: 'Bearer ' + localStorage.getItem('token')
+        //     }
+        //   });
+        //    localStorage.setItem('token', response.data.token);
+        //   await this.$router.push({ path : '/dashboard/' });
+        // },
+        axios.get(url + 'sanctum/csrf-cookie').then(response => {
+          console.log(response);
+          axios.post(url + 'api/login', this.LoginForm).then((resp) => {
+            this.LoginForm.email = '';
+            this.LoginForm.password = '';
+            if (resp["data"]["status"] == "error") {
+              Swal.fire({
+                title: 'OPPS',
+                text: "Invalid email/password Please try again",
+                icon: 'warning',
+              });
+            } else {
+              Swal.fire({
+                title: 'Success',
+                text: "You have been logged-in successfully",
+                icon: 'success',
+              });
+              if (resp.status === 200) {
+                console.log(resp)
+                localStorage.setItem('name', resp["data"]["data"]["name"]);
+                localStorage.setItem('token', resp["data"]["data"]["token"]);
+                localStorage.setItem('created_at', resp["data"]["data"]["created_at"]);
+                localStorage.setItem('id', resp["data"]["data"]["id"])
+                this.$router.push({path: '/dashboard/'});
+              }
+            }
+          }).catch((e) => {
+            console.log(e);
+            Swal.fire({
+              title: 'Hurry',
+              text: e,
+              icon: 'warning',
+            });
+          })
 
-       headers:{
-         Authorization: 'Bearer ' + localStorage.getItem('token')
-       }
-     });
-      localStorage.setItem('token', response.data.token);
-     await this.$router.push({ path : '/dashboard/' });
-   },
-    //   axios.get(url + 'sanctum/csrf-cookie').then(response => {
-    //         console.log(response);
-    //     axios.post(url + 'api/login', this.LoginForm).then((resp) => {
-    //       console.log(resp["data"]["status"]);
-    //       this.LoginForm.email = '';
-    //       this.LoginForm.password = '';
-    //       if (resp["data"]["status"] == "error") {
-    //         Swal.fire({
-    //           title: 'OPPS',
-    //           text: "Invalid email/password Please try again",
-    //           icon: 'warning',
-    //         });
-    //       } else {
-    //         Swal.fire({
-    //           title: 'Success',
-    //           text: "You have been logged-in successfully",
-    //           icon: 'success',
-    //         });
-    //         if (resp.status === 200){
-    //
-    //           localStorage.setItem('token', resp["data"].token);
-    //           this.$router.push({ path : '/dashboard/' });
-    //         }
-    //       }
-    //     }).catch((e) => {
-    //           console.log(e);
-    //           Swal.fire({
-    //             title: 'Hurry',
-    //             text: e,
-    //             icon: 'warning',
-    //           });
-    //         })
-    //   })
-    // },
+          axios.post(url + 'api/count_user').then((resp) => {
+            console.log(resp);
+            if (resp.status === 200) {
+              localStorage.setItem('count_user', resp["data"]["data"]);
+            }
+          }).catch((e) => {
+            console.log(e);
+            Swal.fire({
+              title: 'Hurry',
+              text: e,
+              icon: 'warning',
+            });
+          })
+        })
+      }else {
+        this.$router.push({path: '/'});
+      }
+    },
 
     validEmailcheck: function (emailsignValid) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(emailsignValid);
     },
-  
-}
+  // beforeRouterEnter(to, from, next){
+  //   if (window.Laravel.isLoggedin){
+  //     return next('/dashboard/')
+  //   }
+  //   next();
+  // },
+},
   // methods: {
   //   handleLogin()
   //   {
@@ -192,6 +219,7 @@ export default {
   //     });
   //   }
   // }
+
 }
 
 </script>
