@@ -16,7 +16,7 @@
         </div>
         <div class="flex items-center">
           <div class="hidden mr-6 lg:block">
-            <form action="#">
+            <form @submit.prevent="logout_user">
               <label class="sr-only">Search</label>
               <div class="relative mt-1 lg:w-64">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -41,21 +41,35 @@
             </svg>
           </div>
 
-          <div class="relative inline-block ">
+          <div class="relative inline-block">
             <!-- Dropdown toggle button -->
-            <button
-                class="relative flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
+            <button class="relative flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none"  @click="logout = !logout">
 
-              <span class="mx-1" v-if="user">{{user.name}}</span>
+              <span class="mx-1">{{username}}</span>
               <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
                       fill="currentColor"></path>
               </svg>
+
             </button>
 
             <!-- Dropdown menu -->
-            <div class="absolute right-0 z-20 w-56 mt-2 overflow-hidden bg-white rounded-md">
+            <div class="absolute right-0 z-20 w-56 mt-2 hidden bg-white rounded-md" v-if="logout === false">
+              <ul class="py-1" aria-labelledby="dropdownButton">
+                <li>
+                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                </li>
+              </ul>
             </div>
+
+            <div class="absolute right-0 z-20 w-56 mt-2 overflow-hidden bg-white rounded-md" v-else>
+              <ul class="py-1" aria-labelledby="dropdownButton">
+                <li>
+                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
       </div>
@@ -142,9 +156,18 @@
                     </svg>
                   </div>
 
-                  <div class="mx-5">
-                    <h4 class="text-2xl font-semibold text-gray-700">3</h4>
-                    <div class="text-gray-500">New Users</div>
+                  <div class="mx-5" v-if="condition===2">
+                 <button @click="condition = 1">Users</button>
+                  </div>
+
+                   <div class="mx-5" v-if="condition === 3">
+                    <button @click="condition = 2">Task</button>
+
+                  </div>
+                  <div class="mx-3" v-if="condition === 1">
+
+                    <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_user}}</button>
+                    <div class="text-gray-500">List of Users</div>
                   </div>
                 </div>
               </div>
@@ -176,48 +199,59 @@
 
                   <div class="mx-5">
                     <h4 class="text-2xl font-semibold text-gray-700">5</h4>
-                    <div class="text-gray-500">Available Products</div>
+                    <div class="text-gray-500">Task Done</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="mt-8"></div>
+          <div class="mt-8">
+<!--            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
+<!--              Create Task-->
+<!--            </button>-->
+
+          </div>
 
           <div class="flex flex-col mt-8">
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               <div
                   class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                <table class="min-w-full">
+                <table class="min-w-full table-fixed" v-if="condition === 1">
                   <thead>
                   <tr>
-                    <th
-                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Task Name
+                    <th style="width: 10px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-200 uppercase border-b border-gray-200 bg-gray-50">
                     </th>
-                    <th
-                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Task Description
+                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Name
                     </th>
-                    <th
-                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Status
-                    </th>
-                    <th
-                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                     Date Created
-                    </th>
-                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+
+                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Join Date</th>
                   </tr>
                   </thead>
 
                   <tbody class="bg-white">
-                  <tr>
+                  <tr v-if="!list_of_user.length">
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                      <p>No available task</p>
+                         <p>No available of Users</p>
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-for="lou in list_of_user" :key="lou.id">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <svg class="h-8 w-8 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="7" r="4" />  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -229,18 +263,30 @@
                     </td>
 
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                      <div class="text-sm leading-5 text-gray-900">
-                      </div>
-                      <div class="text-sm leading-5 text-gray-500">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                      <p>{{lou.name}}</p>
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
                       </div>
                     </td>
-
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                      <p></p>
-                  <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"></span></td>
-                    <td class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap">
-                    </td>
-                    <td class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <p>{{lou.created_at}}</p>
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                   </tbody>
@@ -255,28 +301,65 @@
 </template>
 
 <script>
+import moment from 'moment';
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
   name: "DashboardComponent",
+  condition: 1,
   data() {
     return {
-      user: null
+      list_of_user: [],
+      username: localStorage.getItem('name'),
+      created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
+      id: localStorage.getItem('id'),
+      condition: 1,
+      count_user: localStorage.getItem('count_user'),
+      logout: false,
     }
   },
-  async created() {
-    const url = 'http://localhost/'
-    const response = await axios.get(url + 'api/user',{
-      headers: {
-        Authorization: 'Bearer' + localStorage.getItem('token')
+  created() {
+    const url = "http://localhost/"
+    axios.post(url + 'api/list_user').then((resp) => {
+      if (resp) {
+        this.list_of_user = resp["data"]["data"];
+        console.log(this.list_of_user);
       }
-    });
-    this.user = response.data;
+
+    }).catch((e) => {
+      console.log(e);
+      Swal.fire({
+        title: 'Hurry',
+        text: e,
+        icon: 'warning',
+      });
+    })
+  },
+
+  methods: {
+    logout_user(){
+      if (this.logout === true && localStorage.getItem('token') === null){
+        const url = "http://localhost/"
+        axios.post(url + 'api/logout').then((resp) => {
+          console.log(resp)
+          localStorage.removeItem('name');
+          localStorage.removeItem('created_at');
+          localStorage.removeItem('count_user');
+          localStorage.removeItem('id');
+          this.$router.push({path: '/'});
+        })
+      }
+    },
   }
 }
 </script>
 
 <style scoped>
+button:hover{
+  color: blue;
+}
 #marginon{
   margin-right: 200px;
 }
+
 </style>
