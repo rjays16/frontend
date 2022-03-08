@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginComponent from "@/components/LoginComponent";
 import SignupComponent from "@/components/SignupComponent";
 import DashboardComponent from "@/components/DashboardComponent";
+import TaskComponent from "@/components/TaskComponent";
 const routes = [
   {
     path: '/',
@@ -15,9 +16,14 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'dashboard/:id',
+    name: 'dashboard',
     component: DashboardComponent,
-  }
+  },
+  {
+    path: '/task',
+    name: 'task',
+    component: TaskComponent,
+  },
 ]
 
 const router = createRouter({

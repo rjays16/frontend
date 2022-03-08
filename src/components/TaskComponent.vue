@@ -27,9 +27,7 @@
                           clip-rule="evenodd"></path>
                   </svg>
                 </div>
-                <input type="text" name="name"
-                       class=" border  text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-1 block w-full pl-10 p-2.5"
-                       placeholder="Search">
+                <input type="text" name="name" class=" border  text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-1 block w-full pl-10 p-2.5" placeholder="Search">
               </div>
             </form>
           </div>
@@ -82,7 +80,7 @@
         <aside>
           <ul>
             <li>
-              <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md " >
+              <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -100,14 +98,14 @@
             </li>
 
             <li>
-              <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200">
+              <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md " >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 
                   <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                   <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                 </svg>
 
-<!--                <span class="mx-4 font-medium">Task</span>-->
+                <!--                <span class="mx-4 font-medium">Task</span>-->
                 <router-link to="/task" class="mx-4 font-medium">Task</router-link>
               </a>
             </li>
@@ -119,7 +117,7 @@
     <div class="w-full h-full p-4 m-8 overflow-y-auto">
       <div class="flex items-center justify-center p-16 mr-8 border-4 border-dotted lg:p-40">
         <div id="marginon">
-          <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
+          <h3 class="text-3xl font-medium text-gray-700">Task</h3>
           <div class="mt-4">
             <div class="flex flex-wrap -mx-6">
               <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -158,17 +156,17 @@
                   </div>
 
                   <div class="mx-5" v-if="condition===2">
-                 <button @click="condition = 1">Users</button>
+                    <button @click="condition = 1">Users</button>
                   </div>
 
-                   <div class="mx-5" v-if="condition === 3">
+                  <div class="mx-5" v-if="condition === 3">
                     <button @click="condition = 2">Task</button>
 
                   </div>
                   <div class="mx-3" v-if="condition === 1">
 
                     <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_user}}</button>
-                    <div class="text-gray-500">List of Users</div>
+                    <div class="text-gray-500">Your Task</div>
                   </div>
                 </div>
               </div>
@@ -184,7 +182,7 @@
 
                   <div class="mx-5">
                     <h4 class="text-2xl font-semibold text-gray-700">10</h4>
-                    <div class="text-gray-500">Pending task</div>
+                    <div class="text-gray-500">Task Done</div>
                   </div>
                 </div>
               </div>
@@ -192,26 +190,95 @@
               <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
                 <div
                     class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                  <div class="p-3 bg-pink-600 bg-opacity-75 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                  </div>
 
-                  <div class="mx-5">
-                    <h4 class="text-2xl font-semibold text-gray-700">5</h4>
-                    <div class="text-gray-500">Task Done</div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mt-8">
-<!--            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
-<!--              Create Task-->
-<!--            </button>-->
+<!--                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
+<!--                          Create Task-->
+<!--                        </button>-->
+            <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="default-modal">
+              Create Task
+            </button>
 
+            <!-- Main modal -->
+            <form action="#" @submit.prevent="submitTask" autocomplete="off">
+            <div id="default-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+              <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                  <!-- Modal header -->
+                  <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
+                      Add Task
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="default-modal">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                  </div>
+                  <!-- Modal body -->
+                  <div class="p-6 space-y-6">
+                    <div class="flex flex-col mb-6">
+
+                      <label for="tasktitle" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Task Title</label>
+                      <div class="relative">
+                        <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <input id="tasktitle" type="text" name="tasktitle" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Title"
+                        v-model="Taskform.tasktitle"/>
+                      </div>
+                      <b v-if="!tasktitlevalid">Please Enter the task title</b>
+                    </div>
+
+                    <div class="flex flex-col mb-6">
+
+                      <label for="taskdescription" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Task Description</label>
+                      <div class="relative">
+                        <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <input id="taskdescription" type="text" name="taskdescription" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Description"
+                        v-model="Taskform.taskdescription"/>
+                      </div>
+                      <b v-if="!taskdescriptionvalid">Please Enter the task description</b>
+                    </div>
+                  </div>
+                    <div class="flex flex-col mb-6">
+                      <div class="flex justify-center">
+                        <div class="mb-3 xl:w-96" style="width: 590px">
+                          <label for="taskselect" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Assign to</label>
+                          <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                  v-model="Taskform.taskselect">
+                            <option disabled>Select assign of this task:</option>
+                            <option id="taskselect" name="taskselect" v-for="lou in list_of_user" :key="lou.id" v-bind:value="lou.name">{{ lou.name }}</option>
+                          </select>
+                          <b v-if="!taskselectvalid">Please Select assign of this task</b>
+                        </div>
+                      </div>
+                  </div>
+
+
+                  <!-- Modal footer -->
+                  <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button data-modal-toggle="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                    <button data-modal-toggle="default-modal" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
           </div>
 
           <div class="flex flex-col mt-8">
@@ -223,12 +290,14 @@
                   <tr>
                     <th style="width: 10px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-200 uppercase border-b border-gray-200 bg-gray-50">
                     </th>
-                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Name
+                    <th style="width: 150px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      Task Title
                     </th>
 
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Join Date</th>
+                      Created Task Date</th>
+                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                      </th>
                   </tr>
                   </thead>
 
@@ -237,7 +306,7 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                         <p>No available of Users</p>
+                          <p>No available of Users</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -263,10 +332,10 @@
                       </div>
                     </td>
 
-                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 50px">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                      <p>{{lou.name}}</p>
+                          <p>{{lou.name}}</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -289,6 +358,19 @@
                         </div>
                       </div>
                     </td>
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 200px">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   </tbody>
                 </table>
@@ -302,6 +384,7 @@
 </template>
 
 <script>
+import 'flowbite';
 import moment from 'moment';
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -317,7 +400,23 @@ export default {
       condition: 1,
       count_user: localStorage.getItem('count_user'),
       logout: false,
+      Taskform: {
+        tasktitle: null,
+        taskdescription: null,
+        taskselect: null,
+      }
     }
+  },
+  computed: {
+    tasktitlevalid(){
+      return !!this.Taskform.tasktitle
+    },
+    taskdescriptionvalid(){
+      return !!this.Taskform.taskdescription
+    },
+    taskselectvalid(){
+      return !!this.Taskform.taskselect
+    },
   },
   created() {
     const url = "http://localhost/"
@@ -351,6 +450,42 @@ export default {
         })
       }
     },
+    submitTask() {
+      const formvalid = this.taskselectvalid && this.tasktitlevalid && this.taskdescriptionvalid
+      if (formvalid) {
+         this.store();
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'There some error in signup form',
+          icon: 'error',
+        });
+      }
+    },
+   store() {
+      const url = 'http://localhost/'
+      axios.post(url + 'api/store',
+          {
+            title:this.Taskform.tasktitle,
+            title_description:this.Taskform.taskdescription,
+            user_id: this.id,
+            assign_by: this.username,
+            assign_to: this.Taskform.taskselect
+          })
+          .then((res) => {
+            //success message alert
+            Swal.fire({
+              title: 'Succesfully',
+              text: "User has been registered successfully",
+              icon: 'success',
+            });
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+            Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
+          })
+    },
   }
 }
 </script>
@@ -363,4 +498,7 @@ button:hover{
   margin-right: 200px;
 }
 
+b{
+  color: red;
+}
 </style>

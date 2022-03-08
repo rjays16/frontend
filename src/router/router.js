@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue';
 import LoginComponent from "@/components/LoginComponent";
 import SignupComponent from "@/components/SignupComponent";
 import DashboardComponent from "@/components/DashboardComponent";
+import TaskComponent from "@/components/TaskComponent";
 
 const routes = [
     {
@@ -19,6 +20,11 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: DashboardComponent,
+    },
+    {
+        path: '/task',
+        name: 'task',
+        component: TaskComponent,
     },
 ];
 

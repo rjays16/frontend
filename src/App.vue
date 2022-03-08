@@ -5,6 +5,8 @@
 <script>
 
 
+import './index.css'
+
 export default {
   name: 'App'
 }
