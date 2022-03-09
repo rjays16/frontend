@@ -184,7 +184,7 @@
 
                   <div class="mx-5">
                     <h4 class="text-2xl font-semibold text-gray-700">10</h4>
-                    <div class="text-gray-500">Pending task</div>
+                    <div class="text-gray-500">Your Pending task</div>
                   </div>
                 </div>
               </div>
@@ -200,7 +200,7 @@
 
                   <div class="mx-5">
                     <h4 class="text-2xl font-semibold text-gray-700">5</h4>
-                    <div class="text-gray-500">Task Done</div>
+                    <div class="text-gray-500">Your Task Done</div>
                   </div>
                 </div>
               </div>
