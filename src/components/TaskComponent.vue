@@ -86,7 +86,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
-                <span class="mx-4 font-medium">Dashboard</span>
+<!--                <span class="mx-4 font-medium">Dashboard</span>-->
+                <router-link to="/dashboard" class="mx-4 font-medium">Dashboard</router-link>
               </a>
             </li>
 
@@ -166,7 +167,7 @@
                   <div class="mx-3" v-if="condition === 1">
 
                     <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_user}}</button>
-                    <div class="text-gray-500">Your Task</div>
+                    <div class="text-gray-500">List of Task</div>
                   </div>
                 </div>
               </div>
@@ -182,7 +183,7 @@
 
                   <div class="mx-5">
                     <h4 class="text-2xl font-semibold text-gray-700">10</h4>
-                    <div class="text-gray-500">Task Done</div>
+                    <div class="text-gray-500">List Task Done</div>
                   </div>
                 </div>
               </div>
@@ -258,11 +259,12 @@
                     <div class="flex flex-col mb-6">
                       <div class="flex justify-center">
                         <div class="mb-3 xl:w-96" style="width: 590px">
-                          <label for="taskselect" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Assign to</label>
+                          <label for="task_select" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Assign to</label>
                           <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
-                                  v-model="Taskform.taskselect">
+                                  v-model="Taskform.task_select">
                             <option disabled>Select assign of this task:</option>
-                            <option id="taskselect" name="taskselect" v-for="lou in list_of_user" :key="lou.id" v-bind:value="lou.name">{{ lou.name }}</option>
+                            <option id="task_select" name="task_select"
+                                    v-for="lou in list_of_user" :value="lou.name" :key="lou.name">{{lou.name}}</option>
                           </select>
                           <b v-if="!taskselectvalid">Please Select assign of this task</b>
                         </div>
@@ -285,7 +287,7 @@
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               <div
                   class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                <table class="min-w-full table-fixed" v-if="condition === 1">
+                <table class="min-w-full table-fixed" v-if="condition === 1" style="width:950px">
                   <thead>
                   <tr>
                     <th style="width: 10px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-200 uppercase border-b border-gray-200 bg-gray-50">
@@ -297,16 +299,24 @@
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                       Created Task Date</th>
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      </th>
+                      Assign by
+                    </th>
+
+                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50" width="150px">
+                      Assign to
+                    </th>
+                    <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+
+                    </th>
                   </tr>
                   </thead>
 
                   <tbody class="bg-white">
-                  <tr v-if="!list_of_user.length">
+                  <tr v-if="!list_of_task.length">
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p>No available of Users</p>
+                          <p>No available of Task</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -317,7 +327,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr v-for="lou in list_of_user" :key="lou.id">
+                  <tr v-for="lot in list_of_task" :key="lot.id">
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
@@ -332,10 +342,10 @@
                       </div>
                     </td>
 
-                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 50px">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p>{{lou.name}}</p>
+                          <p>{{lot.title}}</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -348,7 +358,7 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p>{{lou.created_at}}</p>
+                          <p>{{lot.created_at}}</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -358,10 +368,53 @@
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 200px">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
+                          <p>{{lot.assign_by}}</p>
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
 
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <p>{{lot.assign_to}}</p>
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium leading-5 text-gray-900">
+                          </div>
+                          <div class="text-sm leading-5 text-gray-500">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+<!--                          <div class="flex items-stretch">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 8 8" fill="currentColor" style="margin-right: 5px">-->
+<!--                              <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd"/>-->
+<!--                            </svg>-->
+
+<!--                            <svg xmlns="http://www.w3.org/2000/svg"  class="h-5 w-5" viewBox="8 8 20 20" fill="currentColor" style="margin-right: 5px">-->
+<!--                              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />-->
+<!--                            </svg>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 5px">-->
+<!--                              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />-->
+<!--                              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />-->
+<!--                            </svg>-->
+<!--                          </div>-->
+                          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                          <button @click="this.delete(lot.id)" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                          <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">View</button>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -394,6 +447,7 @@ export default {
   data() {
     return {
       list_of_user: [],
+      list_of_task: [],
       username: localStorage.getItem('name'),
       created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
       id: localStorage.getItem('id'),
@@ -403,7 +457,7 @@ export default {
       Taskform: {
         tasktitle: null,
         taskdescription: null,
-        taskselect: null,
+        task_select: null,
       }
     }
   },
@@ -415,7 +469,7 @@ export default {
       return !!this.Taskform.taskdescription
     },
     taskselectvalid(){
-      return !!this.Taskform.taskselect
+      return !!this.Taskform.task_select
     },
   },
   created() {
@@ -424,6 +478,21 @@ export default {
       if (resp) {
         this.list_of_user = resp["data"]["data"];
         console.log(this.list_of_user);
+      }
+
+    }).catch((e) => {
+      console.log(e);
+      Swal.fire({
+        title: 'Hurry',
+        text: e,
+        icon: 'warning',
+      });
+    })
+
+    axios.post(url + 'api/list_task').then((resp) => {
+      if (resp) {
+        this.list_of_task = resp["data"]["data"];
+        console.log(this.list_of_task);
       }
 
     }).catch((e) => {
@@ -470,7 +539,7 @@ export default {
             title_description:this.Taskform.taskdescription,
             user_id: this.id,
             assign_by: this.username,
-            assign_to: this.Taskform.taskselect
+            assign_to: this.Taskform.task_select
           })
           .then((res) => {
             //success message alert
@@ -479,6 +548,7 @@ export default {
               text: "User has been registered successfully",
               icon: 'success',
             });
+            window.location.reload()
             console.log(res);
           })
           .catch((e) => {
@@ -486,6 +556,23 @@ export default {
             Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
           })
     },
+    delete(id){
+      const url = "http://localhost/"
+      axios.get(url + 'sanctum/csrf-cookie').then(response => {
+        console.log(response);
+        axios.delete(`${url}api/delete/${id}`).then(response => {
+          console.log(response);
+          let i = this.list_of_task.map(item => item.id).indexOf(id);
+          this.list_of_task.splice(i, 1)
+        }).catch((e) => {
+          Swal.fire({
+            title: 'Hurry',
+            text: e,
+            icon: 'warning',
+          });
+        });
+      });
+    }
   }
 }
 </script>
@@ -501,4 +588,11 @@ button:hover{
 b{
   color: red;
 }
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 </style>
