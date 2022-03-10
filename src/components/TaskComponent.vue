@@ -664,6 +664,13 @@ export default {
         console.log(response);
         axios.delete(`${url}api/delete/${id}`).then(response => {
           console.log(response);
+          this.count();
+          window.location.reload();
+          Swal.fire({
+            title: 'Success',
+            text: "Successfully deleted",
+            icon: 'success'
+          });
           let i = this.list_of_task.map(item => item.id).indexOf(id);
           this.list_of_task.splice(i, 1)
         }).catch((e) => {
