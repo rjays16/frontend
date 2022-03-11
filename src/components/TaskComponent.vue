@@ -412,7 +412,7 @@
 <!--                              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />-->
 <!--                            </svg>-->
 <!--                          </div>-->
-                          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-toggle="default-modals" @click="displayModal">Edit</button>
+                          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-toggle="default-modals" @click="displayModal(lot.id)">Edit</button>
                           <button @click="this.delete(lot.id)" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
                           <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">View</button>
                         </div>
@@ -428,7 +428,7 @@
                   </tbody>
                 </table>
 
-                <form action="#" @submit.prevent="submitTask" autocomplete="off">
+                <form action="#" @submit.prevent="update" autocomplete="off">
                   <div id="default-modals" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
                     <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
                       <!-- Modal content -->
@@ -436,9 +436,9 @@
                         <!-- Modal header -->
                         <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
                           <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
-                            Add Task
+                           Edit Task
                           </h3>
-                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="default-modals">
+                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="default-modals" @click="closeModal">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                           </button>
                         </div>
@@ -456,9 +456,9 @@
                                 </svg>
                               </div>
                               <input id="tasktitle" type="text" name="tasktitle" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Title"
-                                     v-model="Taskform.tasktitle"/>
+                              v-model="Taskformupdate.tasktitleupdate"/>
                             </div>
-                            <b v-if="!tasktitlevalid">Please Enter the task title</b>
+                            <b v-if="!Taskformupdate.tasktitleupdate">Please Enter the task title</b>
                           </div>
 
                           <div class="flex flex-col mb-6">
@@ -473,9 +473,9 @@
                                 </svg>
                               </div>
                               <input id="taskdescription" type="text" name="taskdescription" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Description"
-                                     v-model="Taskform.taskdescription"/>
+                              v-model="Taskformupdate.taskdescriptionupdate"/>
                             </div>
-                            <b v-if="!taskdescriptionvalid">Please Enter the task description</b>
+                            <b v-if="!Taskformupdate.taskdescriptionupdate">Please Enter the task description</b>
                           </div>
                         </div>
                         <div class="flex flex-col mb-6">
@@ -483,12 +483,11 @@
                             <div class="mb-3 xl:w-96" style="width: 590px">
                               <label for="task_select" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Assign to</label>
                               <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
-                                      v-model="Taskform.task_select">
+                                      v-model="Taskformupdate.task_selectupdate">
                                 <option disabled>Select assign of this task:</option>
                                 <option id="task_select" name="task_select"
                                         v-for="lou in list_of_user" :value="lou.name" :key="lou.name">{{lou.name}}</option>
                               </select>
-                              <b v-if="!taskselectvalid">Please Select assign of this task</b>
                             </div>
                           </div>
                         </div>
@@ -522,9 +521,9 @@ export default {
   condition: 1,
   data() {
     return {
-      list_of_user: [],
-      list_of_task: [],
-      task: {},
+      list_of_user: {},
+      list_of_task: {},
+      // task: {},
       username: localStorage.getItem('name'),
       count_task: localStorage.getItem('count_task'),
       created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
@@ -536,6 +535,13 @@ export default {
         tasktitle: null,
         taskdescription: null,
         task_select: null,
+      },
+      Taskformupdate: {
+        task_id: null,
+        tasktitleupdate: null,
+        taskdescriptionupdate: null,
+        task_selectupdate: null,
+        task_number_array: null,
       }
     }
   },
@@ -585,11 +591,25 @@ export default {
   },
 
   methods: {
-    displayModal() {
+    displayModal(id) {
       document.getElementById('default-modals').style.display = 'block';
+      const url = "http://localhost/"
+      axios.get(url+'api/getaskinfo/' + id).then((resp) => {
+        this.Taskformupdate.task_id = resp["data"]["data"]["0"]["id"];
+        this.Taskformupdate.tasktitleupdate = resp["data"]["data"]["0"]["title"]
+        this.Taskformupdate.taskdescriptionupdate = resp["data"]["data"]["0"]["title_description"]
+        this.Taskformupdate.task_selectupdate = resp["data"]["data"]["0"]["assign_to"]
+      }).catch((e) => {
+        Swal.fire({
+          title: 'Hurry',
+          text: e,
+          icon: 'warning',
+        })
+      })
     },
     closeModal() {
       document.getElementById('default-modals').style.display = 'none';
+      window.location.reload();
     },
 
     logout_user(){
@@ -645,19 +665,19 @@ export default {
           })
     },
 
-    update(){
-      const url = "http://localhost/"
-      axios.get(url + 'sanctum/csrf-cookie').then(response => {
-        console.log(response);
-        axios.post(`${url}api/update/${this.$route.params.id}`, this.task).then(response => {
-          console.log(response);
-            this.$router.push({name: 'tasks'});
-        }).catch((e) => {
-          console.log(e);
-          Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
-        })
-      })
-    },
+    // update(){
+    //   const url = "http://localhost/"
+    //   axios.get(url + 'sanctum/csrf-cookie').then(response => {
+    //     console.log(response);
+    //     axios.post(`${url}api/update/${this.$route.params.id}`, this.task).then(response => {
+    //       console.log(response);
+    //         this.$router.push({name: 'tasks'});
+    //     }).catch((e) => {
+    //       console.log(e);
+    //       Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
+    //     })
+    //   })
+    // },
     delete(id){
       const url = "http://localhost/"
       axios.get(url + 'sanctum/csrf-cookie').then(response => {
@@ -700,7 +720,7 @@ export default {
           icon: 'warning',
         });
       })
-    }
+    },
   }
 }
 </script>
