@@ -92,13 +92,6 @@
             </li>
 
             <li>
-              <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                <span class="mx-4 font-medium">Users</span>
-              </a>
-            </li>
-
-            <li>
               <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md " >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 
@@ -166,7 +159,7 @@
                   </div>
                   <div class="mx-3" v-if="condition === 1">
 
-                    <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_user}}</button>
+                    <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_task}}</button>
                     <div class="text-gray-500">List of Task</div>
                   </div>
                 </div>
@@ -287,7 +280,7 @@
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               <div
                   class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                <table class="min-w-full table-fixed" v-if="condition === 1" style="width:950px">
+                <table class="min-w-full table-fixed" v-if="condition === 1" style="width:975px">
                   <thead>
                   <tr>
                     <th style="width: 10px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-200 uppercase border-b border-gray-200 bg-gray-50">
@@ -368,7 +361,7 @@
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 200px">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
                           <p>{{lot.assign_by}}</p>
@@ -399,20 +392,7 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-<!--                          <div class="flex items-stretch">-->
-<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 8 8" fill="currentColor" style="margin-right: 5px">-->
-<!--                              <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd"/>-->
-<!--                            </svg>-->
-
-<!--                            <svg xmlns="http://www.w3.org/2000/svg"  class="h-5 w-5" viewBox="8 8 20 20" fill="currentColor" style="margin-right: 5px">-->
-<!--                              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />-->
-<!--                            </svg>-->
-<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 5px">-->
-<!--                              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />-->
-<!--                              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />-->
-<!--                            </svg>-->
-<!--                          </div>-->
-                          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-toggle="default-modals" @click="displayModal(lot.id)">Edit</button>
                           <button @click="this.delete(lot.id)" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
                           <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">View</button>
                         </div>
@@ -427,6 +407,82 @@
                   </tr>
                   </tbody>
                 </table>
+
+                <form action="#" @submit.prevent="submitTaskupdate" autocomplete="off">
+                  <div id="default-modals" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                    <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
+                      <!-- Modal content -->
+                      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                          <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
+                           Edit Task
+                          </h3>
+                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="default-modals" @click="closeModal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6">
+                          <div class="flex flex-col mb-6">
+
+                            <label for="tasktitle" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Task Title</label>
+                            <div class="relative">
+                              <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+
+                                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                                </svg>
+                              </div>
+                              <input id="tasktitle" type="text" name="tasktitle" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Title"
+                               v-model="Taskform.tasktitle"/>
+                            </div>
+                            <b v-if="!tasktitlevalid">Please Enter the task title</b>
+                          </div>
+
+                          <div class="flex flex-col mb-6">
+
+                            <label for="taskdescription" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Task Description</label>
+                            <div class="relative">
+                              <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+
+                                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                                </svg>
+                              </div>
+                              <input id="taskdescription" type="text" name="taskdescription" class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400" placeholder="Task Description"
+                              v-model="Taskform.taskdescription"/>
+                            </div>
+                            <b v-if="!taskdescriptionvalid">Please Enter the task description</b>
+                          </div>
+                        </div>
+                        <div class="flex flex-col mb-6">
+                          <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96" style="width: 590px">
+                              <label for="task_select" class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Assign to</label>
+                              <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                      v-model="Taskform.task_select">
+                                <option disabled>Select assign of this task:</option>
+                                <option id="task_select" name="task_select"
+                                        v-for="lou in list_of_user" :value="lou.name" :key="lou.name">{{lou.name}}</option>
+                              </select>
+                              <b v-if="!taskselectvalid">Please Select assign of this task</b>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                          <button data-modal-toggle="default-modals" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="closeModal">Update</button>
+                          <button data-modal-toggle="default-modals" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="closeModal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -441,24 +497,28 @@ import 'flowbite';
 import moment from 'moment';
 import axios from "axios";
 import Swal from "sweetalert2";
+
 export default {
   name: "DashboardComponent",
   condition: 1,
   data() {
     return {
-      list_of_user: [],
-      list_of_task: [],
+      list_of_user: {},
+      list_of_task: {},
+      // task: {},
       username: localStorage.getItem('name'),
+      count_task: localStorage.getItem('count_task'),
       created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
       id: localStorage.getItem('id'),
       condition: 1,
       count_user: localStorage.getItem('count_user'),
       logout: false,
       Taskform: {
+        task_id: null,
         tasktitle: null,
         taskdescription: null,
         task_select: null,
-      }
+      },
     }
   },
   computed: {
@@ -472,6 +532,7 @@ export default {
       return !!this.Taskform.task_select
     },
   },
+
   created() {
     const url = "http://localhost/"
     axios.post(url + 'api/list_user').then((resp) => {
@@ -506,6 +567,21 @@ export default {
   },
 
   methods: {
+    displayModal(id) {
+      document.getElementById('default-modals').style.display = 'block';
+      const url = "http://localhost/"
+      axios.get(url + 'api/edit_id/' + id).then(resp => {
+        this.Taskform.task_id = resp["data"]["data"]["id"];
+        this.Taskform.tasktitle = resp["data"]["data"]["title"];
+        this.Taskform.taskdescription = resp["data"]["data"]["title_description"];
+        this.Taskform.task_select = resp["data"]["data"]["assign_to"]
+      })
+    },
+    closeModal() {
+      document.getElementById('default-modals').style.display = 'none';
+      window.location.reload();
+    },
+
     logout_user(){
       if (this.logout === true && localStorage.getItem('token') === null){
         const url = "http://localhost/"
@@ -526,10 +602,24 @@ export default {
       } else {
         Swal.fire({
           title: 'Error',
-          text: 'There some error in signup form',
+          text: 'There some error in submit task form',
           icon: 'error',
         });
       }
+    },
+
+    submitTaskupdate() {
+      const formvalid = this.taskselectvalid && this.tasktitlevalid && this.taskdescriptionvalid
+       if (formvalid) {
+        this.update();
+        window.location.reload()
+      } else {
+         Swal.fire({
+           title: 'Error',
+           text: 'There some error in update task form',
+           icon: 'error',
+        });
+       }
     },
    store() {
       const url = 'http://localhost/'
@@ -545,9 +635,10 @@ export default {
             //success message alert
             Swal.fire({
               title: 'Succesfully',
-              text: "User has been registered successfully",
+              text: "Task is succesfully registered successfully",
               icon: 'success',
             });
+            this.count();
             window.location.reload()
             console.log(res);
           })
@@ -556,12 +647,30 @@ export default {
             Swal.fire({title: 'Hurry', text: e, icon: 'warning',});
           })
     },
+     update(){
+       const url = "http://localhost/"
+       axios.get(url + 'sanctum/csrf-cookie').then(response => {
+         console.log(response);
+         axios.put(url + "api/update/" + this.Taskform.task_id, {
+           title: this.Taskform.tasktitle,
+           title_description: this.Taskform.taskdescription,
+           assign_to: this.Taskform.task_select,
+         })
+       })
+     },
     delete(id){
       const url = "http://localhost/"
       axios.get(url + 'sanctum/csrf-cookie').then(response => {
         console.log(response);
         axios.delete(`${url}api/delete/${id}`).then(response => {
           console.log(response);
+          this.count();
+          window.location.reload();
+          Swal.fire({
+            title: 'Success',
+            text: "Successfully deleted",
+            icon: 'success'
+          });
           let i = this.list_of_task.map(item => item.id).indexOf(id);
           this.list_of_task.splice(i, 1)
         }).catch((e) => {
@@ -572,8 +681,26 @@ export default {
           });
         });
       });
-    }
-  }
+    },
+    
+    count(){
+      const url = "http://localhost/"
+      axios.post(url + 'api/count_task').then((resp) => {
+        console.log(resp);
+        if (resp.status === 200) {
+          localStorage.setItem('count_task', resp["data"]["data"]);
+          console.log(resp);
+        }
+      }).catch((e) => {
+        console.log(e);
+        Swal.fire({
+          title: 'Hurry',
+          text: e,
+          icon: 'warning',
+        });
+      })
+    },
+  },
 }
 </script>
 
@@ -593,6 +720,11 @@ table {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+}
+
+#default-modals {
+  margin-left: 500px;
+  margin-top: 100px;
 }
 
 </style>
