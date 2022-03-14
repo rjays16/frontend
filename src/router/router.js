@@ -26,6 +26,7 @@ const routes = [
         name: 'task',
         component: TaskComponent,
     },
+
 ];
 
 const router = createRouter({

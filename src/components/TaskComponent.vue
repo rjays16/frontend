@@ -191,9 +191,7 @@
           </div>
 
           <div class="mt-8">
-<!--                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
-<!--                          Create Task-->
-<!--                        </button>-->
+
             <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="default-modal">
               Create Task
             </button>
@@ -335,10 +333,11 @@
                       </div>
                     </td>
 
-                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                    <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 200px">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p>{{lot.title}}</p>
+                          <p v-if="lot.title.length>=22">{{lot.title.substring(0,22)+".."}}</p>
+                          <p v-else>{{lot.title}}</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
