@@ -395,7 +395,7 @@
                         <div class="flex-shrink-0 w-10 h-10">
                           <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-toggle="default-modals" @click="displayModal(lot.id)">Edit</button>
                           <button @click="this.delete(lot.id)" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                          <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">View</button>
+                          <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" @click="displayModalview(lot.id)">View</button>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -484,6 +484,63 @@
                     </div>
                   </div>
                 </form>
+
+                  <div id="default-modals-view" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                    <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
+                      <!-- Modal content -->
+                      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                          <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
+                            View Task
+                          </h3>
+                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="default-modals-view" @click="closeModalview">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6" style="width: 2000px;" v-for="lot in list_of_task" :key="lot.id">
+                          <table width="590" height="248" border="1">
+                            <tr>
+                              <td width="336" height="26"><strong>Title:</strong> {{lot.title}}</td>
+                              <td width="238"><strong>Reported by:</strong></td>
+                            </tr>
+                            <tr>
+                              <td rowspan="4"><strong>Description:</strong> {{ lot.title_description }}</td>
+                              <td height="26">{{ lot.assign_by }}</td>
+                            </tr>
+                            <tr>
+                              <td height="26">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td height="26"><strong>Reported to:</strong></td>
+                            </tr>
+                            <tr>
+                              <td height="26">{{ lot.assign_to }}</td>
+                            </tr>
+                            <tr>
+                              <td height="102" colspan="2">
+                                <textarea name="textarea" id="textarea" cols="70" rows="5" placeholder="write a comment"></textarea>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">Submit</button>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+
+
+
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                          <button data-modal-toggle="default-modals-view" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="closeModalview">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
               </div>
             </div>
           </div>
@@ -578,11 +635,26 @@ export default {
         this.Taskform.task_select = resp["data"]["data"]["assign_to"]
       })
     },
+
+    displayModalview(id) {
+      document.getElementById('default-modals-view').style.display = 'block';
+      const url = "http://localhost/"
+      axios.get(url + 'api/edit_id/' + id).then(resp => {
+        this.Taskform.task_id = resp["data"]["data"]["id"];
+        this.Taskform.tasktitle = resp["data"]["data"]["title"];
+        this.Taskform.taskdescription = resp["data"]["data"]["title_description"];
+        this.Taskform.task_select = resp["data"]["data"]["assign_to"]
+      })
+    },
     closeModal() {
       document.getElementById('default-modals').style.display = 'none';
       window.location.reload();
     },
 
+    closeModalview() {
+      document.getElementById('default-modals-view').style.display = 'none';
+      window.location.reload();
+    },
     logout_user(){
       if (this.logout === true && localStorage.getItem('token') === null){
         const url = "http://localhost/"
@@ -720,7 +792,7 @@ b{
   color: red;
 }
 
-table {
+.min-w-full {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
@@ -730,5 +802,11 @@ table {
   margin-left: 500px;
   margin-top: 100px;
 }
+
+#default-modals-view {
+  margin-left: 500px;
+  margin-top: 100px;
+}
+
 
 </style>
