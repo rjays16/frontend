@@ -3,6 +3,7 @@ import LoginComponent from "@/components/LoginComponent";
 import SignupComponent from "@/components/SignupComponent";
 import DashboardComponent from "@/components/DashboardComponent";
 import TaskComponent from "@/components/TaskComponent";
+import PendingComponent from "@/components/PendingComponent";
 const routes = [
   {
     path: '/',
@@ -23,6 +24,11 @@ const routes = [
     path: '/task',
     name: 'task',
     component: TaskComponent,
+  },
+  {
+    path: '/pending',
+    name: 'pending',
+    component: PendingComponent,
   },
 ]
 
