@@ -42,8 +42,9 @@
           <div class="relative inline-block">
             <!-- Dropdown toggle button -->
             <button class="relative flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none"  @click="logout = !logout">
-
-              <span class="mx-1">{{username}}</span>
+              <svg style="margin-top: 5px; margin-left: 5px" class="h-8 w-8 text-red-500"  width="24" height="24" viewBox="0 0 34 34" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="7" r="4" />  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+              <span class="mx-1">
+                {{username}}</span>
               <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
                       fill="currentColor"></path>
@@ -158,7 +159,6 @@
 
                   </div>
                   <div class="mx-3" v-if="condition === 1">
-
                     <button @click="condition = 3" class="text-2xl font-semibold text-gray-700">{{count_task}}</button>
                     <div class="text-gray-500">List of Task</div>
                   </div>
@@ -191,7 +191,9 @@
           </div>
 
           <div class="mt-8">
-
+<!--                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
+<!--                          Create Task-->
+<!--                        </button>-->
             <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="default-modal">
               Create Task
             </button>
@@ -336,7 +338,7 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap" style="width: 200px">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p v-if="lot.title.length>=22">{{lot.title.substring(0,22)+".."}}</p>
+                          <p v-if="lot.title.length>=20">{{lot.title.substring(0,20)+".."}}</p>
                           <p v-else>{{lot.title}}</p>
                         </div>
                         <div class="ml-4">
@@ -504,7 +506,6 @@ export default {
     return {
       list_of_user: {},
       list_of_task: {},
-      // task: {},
       username: localStorage.getItem('name'),
       count_task: localStorage.getItem('count_task'),
       created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
@@ -513,6 +514,7 @@ export default {
       count_user: localStorage.getItem('count_user'),
       logout: false,
       Taskform: {
+        status: "pending",
         task_id: null,
         tasktitle: null,
         taskdescription: null,
@@ -594,6 +596,7 @@ export default {
         })
       }
     },
+
     submitTask() {
       const formvalid = this.taskselectvalid && this.tasktitlevalid && this.taskdescriptionvalid
       if (formvalid) {
@@ -628,7 +631,9 @@ export default {
             title_description:this.Taskform.taskdescription,
             user_id: this.id,
             assign_by: this.username,
-            assign_to: this.Taskform.task_select
+            assign_to: this.Taskform.task_select,
+            status: this.Taskform.status,
+            uri_code: encodeURI(this.Taskform.task_select)
           })
           .then((res) => {
             //success message alert
@@ -638,7 +643,7 @@ export default {
               icon: 'success',
             });
             this.count();
-            window.location.reload()
+            window.location.reload();
             console.log(res);
           })
           .catch((e) => {

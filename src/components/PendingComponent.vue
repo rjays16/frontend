@@ -102,7 +102,7 @@
                   <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                 </svg>
 
-<!--                <span class="mx-4 font-medium">Task</span>-->
+                <!--                <span class="mx-4 font-medium">Task</span>-->
                 <router-link to="/task" class="mx-4 font-medium">Task</router-link>
               </a>
             </li>
@@ -170,7 +170,7 @@
                   </div>
 
                   <div class="mx-5">
-                    <button @click="goto_pending" class="text-2xl font-semibold text-gray-700">{{count_task}}</button>
+                    <button @click="goto_pending" class="text-2xl font-semibold text-gray-700">{{ count_task }}</button>
                     <div class="text-gray-500">Your Pending task</div>
                   </div>
                 </div>
@@ -204,20 +204,20 @@
                     <th style="width: 10px" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-200 uppercase border-b border-gray-200 bg-gray-50">
                     </th>
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Name
+                      My Task
                     </th>
 
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Join Date</th>
+                      Status</th>
                   </tr>
                   </thead>
 
                   <tbody class="bg-white">
-                  <tr v-if="!list_of_user.length">
+                  <tr v-if="!list_of_task.length">
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                         <p>No available of Users</p>
+                          <p>No available of Task</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -228,7 +228,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr v-for="lou in list_of_user" :key="lou.id">
+                  <tr v-for="lot in list_of_task" :key="lot.id">
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
@@ -246,7 +246,7 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                      <p>{{lou.name}}</p>
+                          <p>{{lot.title}}</p>
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
@@ -259,14 +259,14 @@
                     <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 w-10 h-10">
-                          <p>{{lou.created_at}}</p>
-                        </div>
+                          <p>{{lot.status}}</p>
                         <div class="ml-4">
                           <div class="text-sm font-medium leading-5 text-gray-900">
                           </div>
                           <div class="text-sm leading-5 text-gray-500">
                           </div>
                         </div>
+                      </div>
                       </div>
                     </td>
                   </tr>
@@ -286,26 +286,25 @@ import moment from 'moment';
 import axios from "axios";
 import Swal from "sweetalert2";
 export default {
-  name: "DashboardComponent",
+  name: "PendingComponent",
   data() {
     return {
       list_of_user: [],
+      list_of_task: [],
       username: localStorage.getItem('name'),
       created_at: moment(String(localStorage.getItem('created_at'))).format('MM/DD/YYYY'),
       id: localStorage.getItem('id'),
       count_user: localStorage.getItem('count_user'),
       count_task: localStorage.getItem('count_task_for_user_assign'),
       logout: false,
-    }
-  },
+      check_assign_status: '',
+      }
+    },
+
   created() {
     const url = "http://localhost/"
-    axios.post(url + 'api/list_user').then((resp) => {
-      if (resp) {
-        this.list_of_user = resp["data"]["data"];
-        console.log(this.list_of_user);
-      }
-
+    axios.post(url + 'api/list_user_task/'+ this.username).then((resp) => {
+      this.list_of_task = resp["data"]["data"]
     }).catch((e) => {
       console.log(e);
       Swal.fire({
@@ -329,6 +328,19 @@ export default {
       });
     })
 
+    axios.post(url + 'api/count_user').then((resp) => {
+      console.log(resp);
+      if (resp.status === 200) {
+        localStorage.setItem('count_user', resp["data"]["data"]);
+      }
+    }).catch((e) => {
+      console.log(e);
+      Swal.fire({
+        title: 'Hurry',
+        text: e,
+        icon: 'warning',
+      });
+    })
   },
 
   methods: {
@@ -363,11 +375,5 @@ export default {
 </script>
 
 <style scoped>
-button:hover{
-  color: blue;
-}
-#marginon{
-  margin-right: 200px;
-}
 
 </style>
