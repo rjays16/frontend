@@ -197,7 +197,7 @@ export default {
       }else {
         Swal.fire({
           title: 'Invalid',
-          text: 'Email or Password is incorrect',
+          text: 'Invalid email/password Please try again',
           icon: 'warning',
         });
       }
