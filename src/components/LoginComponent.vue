@@ -131,6 +131,7 @@ export default {
       this.$router.push({path: '/signup/'})
     },
     login_user() {
+      console.log(localStorage.getItem('token'));
       if(localStorage.getItem('token') != null) {
         const url = 'http://localhost/'
         //   const response = await axios.post(url +'api/login', {
@@ -194,7 +195,11 @@ export default {
           })
         })
       }else {
-        this.$router.push({path: '/'});
+        Swal.fire({
+          title: 'Invalid',
+          text: 'Email or Password is incorrect',
+          icon: 'warning',
+        });
       }
     },
 
