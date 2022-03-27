@@ -192,6 +192,13 @@ export default {
               icon: 'warning',
             });
           })
+        }).catch((e) => {
+          console.log(e);
+          Swal.fire({
+            title: 'Hurry',
+            text: e,
+            icon: 'warning',
+          });
         })
     },
 
