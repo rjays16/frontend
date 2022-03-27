@@ -132,7 +132,6 @@ export default {
     },
     login_user() {
       console.log(localStorage.getItem('token'));
-      if(localStorage.getItem('token') != null) {
         const url = 'http://localhost/'
         //   const response = await axios.post(url +'api/login', {
         //     email: this.LoginForm.email,
@@ -194,13 +193,6 @@ export default {
             });
           })
         })
-      }else {
-        Swal.fire({
-          title: 'Invalid',
-          text: 'Invalid email/password Please try again',
-          icon: 'warning',
-        });
-      }
     },
 
     validEmailcheck: function (emailsignValid) {
